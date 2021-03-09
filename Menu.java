@@ -1,91 +1,180 @@
-import javax.swing.JOptionPane;
 import java.util.Scanner;
-public class Menu {
-	
-	public void MenuPrincipal() {
-		//System.out.println("Bem Vindo !!!\n");
-		JOptionPane.showMessageDialog(null, "Escolha a opção Desejada\n1 - Entrada de Estoque\n2 - Saída de estoque\n3 - Quantidade em Estoque\n4 - Sair do Programa");
-		
-	}
-	
-	public void MenuEntrada() {
-		JOptionPane.showMessageDialog(null,"Deseja Acrescentar Quais Itens ao Estoque ?");
-		JOptionPane.showMessageDialog(null,"1 - Canetas\n2 - Lápis\n3 - Resmas De papal\n4 - Borrachas");
-	}
-	public void MenuRetirada() {
-		JOptionPane.showMessageDialog(null,"Deseja retirar Quais Itens ao Estoque ?");
-		JOptionPane.showMessageDialog(null,"1 - Canetas\n2 - Lápis\n3 - Resmas De papal\n4 - Borrachas");
-	}
-	
-		/*Scanner in = new Scanner (System.in);
-		int opc = in.nextInt();
-		Estoque estoqueAtual = new Estoque();
-		
-		switch(opc) {
-		case 1:
-			System.out.println("Deseja inserir unidades ou caixas(12.und)");
-			System.out.println("1 - Unidades\n2 - Caixa(12.und)");
-			int op = in.nextInt();
-			
-			switch(op) {
-			case 1:
-				System.out.println("insira o valor deasejado:");
-				int a = in.nextInt();
-				estoqueAtual.caneta = estoqueAtual.caneta+a;
-				break;
-				
-			case 2:
-				System.out.println("insira o valor deasejado:");
-				int val = in.nextInt();
-				estoqueAtual.caneta = estoqueAtual.caneta+(val*12);
-				break;
-			}
-			break;
-			
-		case 2:
-			System.out.println("Deseja inserir unidades ou caixas(12.und)");
-			System.out.println("1 - Unidades\n2 - Caixa(12.und)");
-			int op1 = in.nextInt();
-			switch(op1) {
-			
-			case 1:
-				System.out.println("insira o valor deasejado:");
-				int b = in.nextInt();
-				estoqueAtual.lapis = estoqueAtual.lapis+b;
-				break;
-				
-			case 2:
-				System.out.println("insira o valor deasejado:");
-				int val2 = in.nextInt();
-				estoqueAtual.lapis = estoqueAtual.lapis+(val2*12);
-				break;
-			}
-			break;
-			
-		case 3:
-			System.out.println("insira o valor deasejado de resmas:");
-			int val3 = in.nextInt();
-			estoqueAtual.papal = estoqueAtual.papal+val3;
-			break;
-			
-		case 4:
-			System.out.println("Deseja inserir unidades ou caixas(6.und)");
-			System.out.println("1 - Unidades\n2 - Caixa(6.und)");
-			int op2 = in.nextInt();
-			switch(op2) {
-			case 1:
-				System.out.println("insira o valor deasejado:");
-				int c = in.nextInt();
-				estoqueAtual.borracha = estoqueAtual.borracha+c;
-				break;
-				
-			case 2:
-				System.out.println("insira o valor deasejado:");
-				int val4 = in.nextInt();
-				estoqueAtual.borracha = estoqueAtual.borracha+(val4*4);
-				break;
-			}
-			break;
-		}*/
-	}
 
+public class menu extends Estoque{
+    Scanner blz = new Scanner(System.in); 
+    Contador c = new Contador();
+    
+    int escolha, qnt=0, produtoRetirar, produtoColocar, cond = 0, uoc=0;
+    int tipo;
+    int contVendasCaneta=0, contVendasLapis=0, contVendasPapal=0, contVendasBorracha=0;
+    int contComprasCaneta=0, contComprasLapis=0, contComprasPapal=0, contComprasBorracha=0;
+    
+public void opcoes(){
+            int escolha;
+            System.out.println("\nSEJA BEM VINDO");
+            System.out.println("1-COMPRAR");
+            System.out.println("2-VENDER");
+            System.out.println("3-QUANTIDADE DE ESTOQUE");
+            System.out.println("4-Valor Bruto ATUAL");
+            System.out.println("7-SALDO:");
+            System.out.println("5-SAIR DO PROGRAMA\n");
+            
+        }
+          
+    void menu() {   
+        while (cond < 1) {
+            opcoes();
+            escolha = blz.nextInt();
+            switch (escolha) {
+
+                case 1:
+                    exibirProdutos(escolha);
+                    produtoColocar = blz.nextInt();
+                    
+                    System.out.println("unidades ou caixas? 1-unidades || 2-caixas");
+                    uoc = blz.nextInt();
+                    switch (produtoColocar) {
+                        case 1:
+                            if(uoc == 1){
+                                vendOuComp(escolha);
+                                qnt = blz.nextInt();
+                            }if(uoc == 2){
+                                vendOuComp(escolha);
+                                qnt = blz.nextInt();
+                                qnt=qnt*10;
+                            }
+                            
+                            tipo=1;
+                            if(c.verificaSaldo(qnt, tipo)==1) {
+                                adcCaneta(caneta, qnt);
+                                c.contCompras(tipo, qnt);
+                                break;
+                            }
+                            else {
+                                c.verificaSaldo(qnt, tipo);
+                                break;
+                            }
+                        case 2:
+                            if(uoc == 1){
+                                vendOuComp(escolha);
+                                qnt = blz.nextInt();
+                            }if(uoc == 2){
+                                vendOuComp(escolha);
+                                qnt = blz.nextInt();
+                                qnt=qnt*12;
+                            }                                                      
+                            
+                            tipo=2;
+                            if(c.verificaSaldo(qnt, tipo)==1) {
+                                adcLapis(lapis, qnt);
+                                c.contCompras(tipo, qnt);
+                                break;
+                            }
+                            else {
+                                c.verificaSaldo(qnt, tipo);
+                                break;
+                            }
+                        case 3:
+                            vendOuComp(escolha);
+                            qnt = blz.nextInt();
+                            tipo=3;
+                            if(c.verificaSaldo(qnt, tipo)==1) {
+                                papal = papal + qnt;
+                                c.contCompras(tipo, qnt);
+                                break;
+                            }
+                            else {
+                                c.verificaSaldo(qnt, tipo);
+                                break;
+                            }
+                        case 4:
+                            if(uoc == 1){
+                                vendOuComp(escolha);
+                                qnt = blz.nextInt();
+                            }if(uoc == 2){
+                                vendOuComp(escolha);
+                                qnt = blz.nextInt();
+                                qnt=qnt*6;
+                            }
+                            
+                            tipo=4;
+                            if(c.verificaSaldo(qnt, tipo)==1) {
+                                adcBorracha(borracha, qnt);
+                                c.contCompras(tipo, qnt);
+                                break;
+                            }
+                            else {
+                                c.verificaSaldo(qnt, tipo);
+                                break;
+                            }
+                    }        
+                    break;
+                case 2://---------------------------------------------------VENDA---------------------------------------
+                    exibirProdutos(escolha);
+                    this.produtoRetirar = blz.nextInt();
+                    switch (produtoRetirar) {     
+                        case 1:
+                        //fazer pra vender tbm em caixas
+                            vendOuComp(escolha);
+                            qnt = blz.nextInt();
+                            tipo=1;
+                            if(verificaEstoque(qnt, tipo)==1){
+                            vendeCaneta(caneta, qnt);
+                            c.contVendas(tipo, qnt);
+                            break;
+                        }else{
+                            break;
+                        }
+                        case 2:
+                            vendOuComp(escolha);
+                            qnt = blz.nextInt();
+                            tipo=2;
+                            if(verificaEstoque(qnt, tipo)==1){
+                            vendeLapis(lapis, qnt);
+                            c.contVendas(tipo, qnt);
+                            break;
+                        }else{
+                            break;
+                        }
+                        case 3:
+                            vendOuComp(escolha);
+                            qnt = blz.nextInt();
+                            if(verificaEstoque(qnt, tipo)==1){
+                            papal = papal - qnt;
+                            tipo=3;
+                            c.contVendas(tipo, qnt);
+                            break;
+                        }else{
+                            break;
+                        }
+                        case 4:
+                            vendOuComp(escolha);
+                            qnt = blz.nextInt();
+                            tipo=4;
+                            if(verificaEstoque(qnt, tipo)==1){
+                            vendeBorracha(borracha, qnt);
+                            c.contVendas(tipo, qnt);
+                            break;
+                        }else{
+                            break;
+                    }
+                }
+                    break;
+                case 3:
+                    exibirProdutos(escolha);
+                    break;
+
+                    case 4:
+                    c.lucro();
+                    break;
+                case 5:
+                    cond = 2;
+                    break;
+                    
+                case 7:
+                    c.saldo();
+                    
+            }
+        }
+    }
+}
