@@ -41,25 +41,25 @@ public class Contador {
 
 	public double verificaSaldo(double qnt, double tipo) {
 		if (tipo == 1) {
-			if ((qnt * this.valorMonitor) > saldoAtual) {
+			if ((qnt * this.valorCompraMonitor) > saldoAtual) {
 				System.out.println("saldo insuficiente");
 				return 0;
 			}
 		}
 		if (tipo == 2) {
-			if ((qnt * this.valorTeclado) > saldoAtual) {
+			if ((qnt * this.valorCompraTeclado) > saldoAtual) {
 				System.out.println("saldo insuficiente");
 				return 0;
 			}
 		}
 		if (tipo == 3) {
-			if ((qnt * this.valorMouse) > saldoAtual) {
+			if ((qnt * this.valorCompraMouse) > saldoAtual) {
 				System.out.println("saldo insuficiente");
 				return 0;
 			}
 		}
 		if (tipo == 4) {
-			if ((qnt * this.valorFonte) > saldoAtual) {
+			if ((qnt * this.valorCompraFonte) > saldoAtual) {
 				System.out.println("saldo insuficiente");
 				return 0;
 			}
